@@ -14,24 +14,30 @@
 
 What columns violate 1NF?
 
+member_id
 food_code
 food_description
 
 What entities do you recognize that could be extracted?
 
 Member: member_id, member_name, member_address
-Dinner: dinner_id, dinner_date, venue_code, venue_description, food_code, food_description
+Dinner: dinner_id, dinner_date
+Venue: venue_code, venue_description
+Food: food_code, food_description
 
 
 Name all the tables and columns that would make a 3NF compliant solution.
 
 FIRST TABLE members
-member_id - member_name - member_address
+PK member_key - member_id - member_name - member_address
 SECOND TABLE dinners
-dinner_id - dinner_date - venue_code - food_code
+PK dinner_id - dinner_date - venue_code
 THIRD TABLE venues 
-venue_code venue_description
+PK venue_code - venue_description
 FOURTH TABLE food
-food_code - food_description
+PK food_code - food_description
 FIFTH TABLE member_dinner
-member_id - dinner_id
+member_key - member_id
+SIXTH table dinner_food
+dinner_id - food_code
+
