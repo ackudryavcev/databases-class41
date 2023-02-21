@@ -1,11 +1,11 @@
 const mysql = require('mysql');
+const DB_NAME = 'userdb';
 
 // Make a connection to the database
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'hyfuser',
     password: 'hyfpassword',
-    database: 'userdb',
     multipleStatements: true // This is needed to execute multiple queries in one statement
 });
 
@@ -14,6 +14,7 @@ const connection = mysql.createConnection({
 // All research papers and the number of authors that wrote that paper.
 
 const numOfPapers = `
+USE ${DB_NAME};
 SELECT a1.paper_title AS Paper_name, COUNT(a2.author_id) AS Quantity
 FROM research_Papers a1
 LEFT JOIN research_author a2 ON a1.paper_id = a2.paper_id
@@ -32,7 +33,8 @@ connection.query(numOfPapers, (error, result) => {
 //Sum of the research papers published by all female authors.
 
 const sumFemalePapers = `
-SELECT COUNT(a1.paper_title) AS Number_of_papers
+USE ${DB_NAME};
+SELECT COUNT(DISTINCT a1.paper_title) AS Number_of_papers
 FROM research_Papers a1
 LEFT JOIN research_author a2  ON a1.paper_id = a2.paper_id
 LEFT JOIN authors a3 ON a2.author_id = a3.author_id
@@ -50,6 +52,7 @@ connection.query(sumFemalePapers, (error, result) => {
 // Average of the h-index of all authors per university.
 
 const averageIndex = `
+USE ${DB_NAME};
 SELECT university, AVG(h_index)
 FROM authors
 GROUP BY university
@@ -66,7 +69,8 @@ connection.query(averageIndex, (error, result) => {
 //Sum of the research papers of the authors per university.
 
 const SumOfPapers = `
-SELECT a1.university, COUNT(a2.paper_id) AS total_papers
+USE ${DB_NAME};
+SELECT a1.university, COUNT(DISTINCT a2.paper_id) AS total_papers
 FROM authors a1
 LEFT JOIN research_author a2 ON a2.author_id = a1.author_id
 GROUP BY a1.university;
@@ -82,6 +86,7 @@ connection.query(SumOfPapers, (error, result) => {
 //Minimum and maximum of the h-index of all authors per university.
 
 const minAndMax = `
+USE ${DB_NAME};
 SELECT university, MIN(h_index), MAX(h_index)
 FROM authors
 GROUP BY university

@@ -1,11 +1,11 @@
 const util = require('util');
 const mysql = require('mysql');
+const DB_NAME = 'big';
 
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'hyfuser',
-    password: 'hyfpassword',
-    database: 'big',
+    password: 'hyfpassword'
 });
 
 
@@ -15,6 +15,7 @@ connection.connect();
 async function seedDatabase() {
 
     const CREATE_TABLE = `
+        USE ${DB_NAME};
         CREATE TABLE IF NOT EXISTS big
         (
             id_pk INT PRIMARY KEY AUTO_INCREMENT,
@@ -25,9 +26,9 @@ async function seedDatabase() {
     let rows = []
     for (i = 1; i <= 1000000; i++) {
         rows.push([i]);
-        if(i%10000 === 0){
-            console.log("i="+i);
-            await execQuery('INSERT INTO big(number) VALUES ?',[rows]);
+        if (i % 10000 === 0) {
+            console.log("i=" + i);
+            await execQuery('INSERT INTO big(number) VALUES ?', [rows]);
             rows = [];
         }
     }
@@ -48,5 +49,4 @@ async function queries() {
 
 }
 
-seedDatabase().then(() => queries().then(()=>connection.end()));
-
+seedDatabase().then(() => queries().then(() => connection.end()));
