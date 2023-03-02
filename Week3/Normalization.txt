@@ -14,9 +14,9 @@
 
 What columns violate 1NF?
 
-member_id
-food_code
-food_description
+member_id - if the member_id column is part of a composite primary key or a unique constraint, then having duplicate values in the member_id column violates that constraint, and therefore violates 1NF
+food_code - two or more values in one cell violates 1NF
+food_description - two or more values in one cell violates 1NF
 
 What entities do you recognize that could be extracted?
 

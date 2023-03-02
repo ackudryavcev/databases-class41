@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
 
 const createAccount = `
 CREATE TABLE IF NOT EXISTS accounts (
-    account_number VARCHAR(20) NOT NULL PRIMARY KEY,
+    account_number INTEGER NOT NULL PRIMARY KEY,
     balance DECIMAL(10, 2) NOT NULL,
     CHECK (balance >= 0)
   );  
@@ -27,7 +27,7 @@ connection.query(createAccount, (error, result) => {
 const createAccountChanges = `
 CREATE TABLE IF NOT EXISTS account_changes (
     change_number INT AUTO_INCREMENT PRIMARY KEY,
-    account_number VARCHAR(20) NOT NULL,
+    account_number INTEGER NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
     changed_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     remark VARCHAR(255),

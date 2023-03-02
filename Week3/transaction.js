@@ -15,16 +15,16 @@ START TRANSACTION;
 
 UPDATE accounts
 SET balance = balance - 100.00
-WHERE account_number = 'A0101';
+WHERE account_number = 101;
 
 UPDATE accounts
 SET balance = balance + 100.00
-WHERE account_number = 'A0102';
+WHERE account_number = 102;
 
 INSERT INTO account_changes (account_number, amount, remark)
 VALUES
-  ('A0101', -100.00, 'Withdrawal'),
-  ('A0102', 100.00, 'Deposit');
+  (101, -100.00, 'Withdrawal'),
+  (102, 100.00, 'Deposit');
 SELECT @@autocommit;
 COMMIT;
 ROLLBACK;
